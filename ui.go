@@ -284,7 +284,7 @@ func infotimefmt(t time.Time) string {
 	return t.Format("Jan _2  2006")
 }
 
-func fileInfo(f *file, d *dir) string {
+func fileInfo(f *file, d *dir, selections map[string]int) string {
 	var info string
 
 	path := filepath.Join(d.path, f.Name())
@@ -321,6 +321,29 @@ func fileInfo(f *file, d *dir) string {
 			default:
 				info = fmt.Sprintf("%s 999+", info)
 			}
+                case "fsize":
+                        var size int64 = 0
+                        var i int8 = 5
+
+                        if f.IsDir() {
+                                if f.CachedSize == 0 || f.CachedSize == 4096 || (selections[path] != 0) {
+                                        _ = filepath.Walk(path, func(_ string, file os.FileInfo, err error) error {
+                                                if err != nil || file == nil {//|| (i == 0 && selections[path] == 0) {
+                                                        return nil
+                                                }
+                                                if !file.IsDir() {
+                                                        size += file.Size()
+                                                } else {
+                                                        i--
+                                                }
+                                                return nil
+                                        })
+                                        f.CachedSize = size
+                                }
+                        } else {
+                               f.CachedSize = f.Size()
+                        }
+                        info = fmt.Sprintf("%s %4s", info, humanize(f.CachedSize))
 		case "time":
 			info = fmt.Sprintf("%s %12s", info, infotimefmt(f.ModTime()))
 		case "atime":
@@ -443,7 +466,7 @@ func (win *win) printDir(screen tcell.Screen, dir *dir, selections map[string]in
 			}
 		}
 
-		info := fileInfo(f, dir)
+		info := fileInfo(f, dir, selections)
 
 		if len(info) > 0 && win.w-lnwidth-iwidth-2 > 2*len(info) {
 			if win.w-2 > w+len(info) {

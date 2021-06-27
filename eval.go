@@ -292,7 +292,7 @@ func (e *setExpr) eval(app *app, args []string) {
 		toks := strings.Split(e.val, ":")
 		for _, s := range toks {
 			switch s {
-			case "size", "time", "atime", "ctime":
+			case "size", "fsize", "time", "atime", "ctime":
 			default:
 				app.ui.echoerr("info: should consist of 'size', 'time', 'atime' or 'ctime' separated with colon")
 				return

@@ -29,6 +29,8 @@ const (
 type file struct {
 	os.FileInfo
 	linkState  linkState
+        CachedSize int64
+        Prefix     string
 	linkTarget string
 	path       string
 	dirCount   int
