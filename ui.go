@@ -323,18 +323,14 @@ func fileInfo(f *file, d *dir, selections map[string]int) string {
 			}
                 case "fsize":
                         var size int64 = 0
-                        var i int8 = 5
-
                         if f.IsDir() {
                                 if f.CachedSize == 0 || f.CachedSize == 4096 || (selections[path] != 0) {
                                         _ = filepath.Walk(path, func(_ string, file os.FileInfo, err error) error {
-                                                if err != nil || file == nil {//|| (i == 0 && selections[path] == 0) {
+                                                if err != nil || file == nil {
                                                         return nil
                                                 }
                                                 if !file.IsDir() {
                                                         size += file.Size()
-                                                } else {
-                                                        i--
                                                 }
                                                 return nil
                                         })
