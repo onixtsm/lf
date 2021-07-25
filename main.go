@@ -133,6 +133,8 @@ func exportOpts() {
 				sortby = "name"
 			case sizeSort:
 				sortby = "size"
+			case fsizeSort:
+				sortby = "fsize"
 			case timeSort:
 				sortby = "time"
 			case ctimeSort:

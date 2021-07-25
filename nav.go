@@ -29,7 +29,7 @@ const (
 type file struct {
 	os.FileInfo
 	linkState  linkState
-        CachedSize int64
+    CachedSize int64
 	linkTarget string
 	path       string
 	dirCount   int
@@ -171,6 +171,10 @@ func (dir *dir) sort() {
 	case sizeSort:
 		sort.SliceStable(dir.files, func(i, j int) bool {
 			return dir.files[i].Size() < dir.files[j].Size()
+		})
+	case fsizeSort:
+		sort.SliceStable(dir.files, func(i, j int) bool {
+			return dir.files[i].CachedSize < dir.files[j].CachedSize
 		})
 	case timeSort:
 		sort.SliceStable(dir.files, func(i, j int) bool {

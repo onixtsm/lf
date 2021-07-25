@@ -8,6 +8,7 @@ const (
 	naturalSort sortMethod = iota
 	nameSort
 	sizeSort
+	fsizeSort
 	timeSort
 	atimeSort
 	ctimeSort
@@ -163,10 +164,12 @@ func init() {
 	gOpts.keys["zr"] = &setExpr{"reverse!", ""}
 	gOpts.keys["zn"] = &setExpr{"info", ""}
 	gOpts.keys["zs"] = &setExpr{"info", "size"}
+	gOpts.keys["zS"] = &setExpr{"info", "fsize"}
 	gOpts.keys["zt"] = &setExpr{"info", "time"}
 	gOpts.keys["za"] = &setExpr{"info", "size:time"}
 	gOpts.keys["sn"] = &listExpr{[]expr{&setExpr{"sortby", "natural"}, &setExpr{"info", ""}}, 1}
 	gOpts.keys["ss"] = &listExpr{[]expr{&setExpr{"sortby", "size"}, &setExpr{"info", "size"}}, 1}
+	gOpts.keys["sS"] = &listExpr{[]expr{&setExpr{"info", "fsize"}, &setExpr{"sortby", "fsize"}}, 1}
 	gOpts.keys["st"] = &listExpr{[]expr{&setExpr{"sortby", "time"}, &setExpr{"info", "time"}}, 1}
 	gOpts.keys["sa"] = &listExpr{[]expr{&setExpr{"sortby", "atime"}, &setExpr{"info", "atime"}}, 1}
 	gOpts.keys["sc"] = &listExpr{[]expr{&setExpr{"sortby", "ctime"}, &setExpr{"info", "ctime"}}, 1}

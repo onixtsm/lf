@@ -345,6 +345,8 @@ func (e *setExpr) eval(app *app, args []string) {
 			gOpts.sortType.method = nameSort
 		case "size":
 			gOpts.sortType.method = sizeSort
+		case "fsize":
+			gOpts.sortType.method = fsizeSort
 		case "time":
 			gOpts.sortType.method = timeSort
 		case "ctime":
